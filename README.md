@@ -117,8 +117,14 @@ Each points to the precise line of code responsible.
 
 ## Limitations
 
+- Only analyzes **definitely lost** leaks reported by Valgrind
 - One allocation tracked at a time
 - Single execution path (no multi-threading analysis)
+
+
+## Report a Problem
+
+If Vex produces an incorrect diagnosis or fails on your code, [open an issue](https://github.com/hooop/Vex/issues). Describe what happened and, if possible, include the code that caused the problem. This helps us improve the tool.
 
 
 ## Design Philosophy
