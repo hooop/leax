@@ -307,10 +307,12 @@ def scan_params_for_address(tracked_addr):
                         # Indirect match: dereference as array and check
                         # whether any element holds the tracked address.
                         try:
-                            for idx in range(256):
+                            idx = 0
+                            while True:
                                 if int(val[idx]) == tracked_addr:
                                     mappings[sym.name] = tracked_addr
                                     break
+                                idx += 1
                         except (gdb.error, gdb.MemoryError, TypeError):
                             pass
                     except (gdb.error, ValueError, OverflowError):

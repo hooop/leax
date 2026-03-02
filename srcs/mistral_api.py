@@ -136,7 +136,9 @@ def _format_gdb_trace(gdb_trace: list[dict]) -> str:
     Format GDB execution trace for prompt.
 
     Each entry contains file, line, function and code representing
-    the actual lines executed at runtime, in order.
+    the actual lines executed at runtime, in order.  Repeated loop
+    iterations with identical line sequences are compressed to avoid
+    sending huge traces to the LLM.
 
     Args:
         gdb_trace: List of trace steps from GDB.
@@ -148,16 +150,85 @@ def _format_gdb_trace(gdb_trace: list[dict]) -> str:
     if not gdb_trace:
         return ""
 
+    compressed = _compress_trace(gdb_trace)
+
     formatted = ""
-    for step in gdb_trace:
-        func = step.get("function", "?")
-        line = step.get("line", "?")
-        code = step.get("code", "").strip()
-        if code:
-            formatted += f"  {func}() line {line}: {code}\n"
+    for entry in compressed:
+        if entry["type"] == "line":
+            step = entry["step"]
+            func = step.get("function", "?")
+            line = step.get("line", "?")
+            code = step.get("code", "").strip()
+            if code:
+                formatted += f"  {func}() line {line}: {code}\n"
+            else:
+                formatted += f"  {func}() line {line}\n"
         else:
-            formatted += f"  {func}() line {line}\n"
+            formatted += f"  [... same {entry['length']} lines repeated {entry['count']} more times]\n"
     return formatted
+
+
+def _compress_trace(gdb_trace: list[dict]) -> list[dict]:
+    """
+    Compress repeated sequences in a GDB trace.
+
+    Detects consecutive loop iterations that execute the exact same
+    sequence of (function, line) pairs and replaces duplicates with
+    a single occurrence plus a repetition count.
+
+    Args:
+        gdb_trace: Raw trace steps.
+
+    Returns:
+        List of entries, each either:
+        - {"type": "line", "step": <original step>}
+        - {"type": "repeat", "length": <sequence length>, "count": <extra repetitions>}
+    """
+
+    # Build signature list: (function, line) for each step.
+    signatures = [
+        (s.get("function", ""), s.get("line", 0))
+        for s in gdb_trace
+    ]
+    n = len(signatures)
+
+    result = []
+    i = 0
+
+    while i < n:
+        # Try to find a repeating sequence starting at i.
+        best_len = 0
+        best_count = 0
+
+        # Try sequence lengths from 2 to 20 lines.
+        for seq_len in range(2, min(21, n - i + 1)):
+            pattern = signatures[i:i + seq_len]
+            count = 1
+            j = i + seq_len
+            while j + seq_len <= n and signatures[j:j + seq_len] == pattern:
+                count += 1
+                j += seq_len
+            # Keep the best (most total lines compressed).
+            if count >= 2 and count * seq_len > best_count * best_len:
+                best_len = seq_len
+                best_count = count
+
+        if best_count >= 2:
+            # Emit the first occurrence.
+            for k in range(i, i + best_len):
+                result.append({"type": "line", "step": gdb_trace[k]})
+            # Emit compression marker for the rest.
+            result.append({
+                "type": "repeat",
+                "length": best_len,
+                "count": best_count - 1,
+            })
+            i += best_len * best_count
+        else:
+            result.append({"type": "line", "step": gdb_trace[i]})
+            i += 1
+
+    return result
 
 
 def _build_prompt(
