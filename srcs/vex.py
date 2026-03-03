@@ -131,7 +131,6 @@ def _reanalyze_after_compilation(
 
     # Display delta
     resolved_count = initial_leak_count - new_leak_count
-    leak_word = "leak" if new_leak_count == 1 else "leaks"
     resolved_word = "leak resolved" if resolved_count == 1 else "leaks resolved"
     detected_word = "leak detected" if new_leak_count == 1 else "leaks detected"
 
@@ -274,8 +273,6 @@ def _try_gdb_trace(
 
         # Function names from the backtrace (innermost → outermost).
         backtrace_functions = [frame["function"] for frame in reversed(backtrace)]
-
-
 
         trace_result = trace_pointer(
             executable,

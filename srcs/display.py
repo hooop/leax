@@ -340,8 +340,6 @@ def _build_code_section(error: ValgrindError, analysis: MistralAnalysis) -> str:
             )
             return output
 
-    leak_type = analysis.get("leak_type", 0)
-
     # Title
     output = f"{GREEN}• Root Cause{RESET}\n\n"
 

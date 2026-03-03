@@ -842,10 +842,12 @@ def find_root_cause_from_trace(
         # return the structure root so we can resume tracking.
         if traversal_cleared and not tracking:
             stripped = code.strip()
-            if func == structure_func \
-                    and stripped.startswith("return") \
-                    and stripped != "return ;" \
-                    and stripped != "return;":
+            if (
+                func == structure_func
+                and stripped.startswith("return")
+                and stripped != "return ;"
+                and stripped != "return;"
+            ):
                 ret_val = extract_return_value(code)
                 if ret_val:
                     tracking[ret_val] = {
@@ -977,8 +979,9 @@ def find_root_cause_from_trace(
 
             # Detect if this free targets a container (Type 3).
             free_arg = extract_free_argument(code)
-            if (entry["target"].startswith(free_arg + "->")
-                    or entry["target"].startswith(free_arg + "[")):
+            if entry["target"].startswith(free_arg + "->") or entry[
+                "target"
+            ].startswith(free_arg + "["):
                 steps.append(
                     f"FREE: {found_segment} in {func}()"
                     f" (container freed, but {entry['target']} still inside)"

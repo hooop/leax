@@ -45,7 +45,7 @@ def read_key(hotkeys=None):
         # ESC sequence (arrows)
         if char == "\x1b":
             # Read next 2 bytes
-            bracket = sys.stdin.read(1)  # '['
+            sys.stdin.read(1)  # '[' bracket
             arrow = sys.stdin.read(1)  # 'A' or 'B'
 
             if arrow == "A":
@@ -102,7 +102,7 @@ def _read_raw_key(hotkeys=None):
     char = sys.stdin.read(1)
 
     if char == "\x1b":
-        bracket = sys.stdin.read(1)
+        sys.stdin.read(1)  # '[' bracket
         arrow = sys.stdin.read(1)
         if arrow == "A":
             return "up"

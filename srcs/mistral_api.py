@@ -76,8 +76,6 @@ def analyze_memory_leak(
     try:
         prompt = _build_prompt(error_data, code_context, root_cause)
 
-
-
         response = _call_mistral_api(prompt)
 
         # Nettoie la réponse
