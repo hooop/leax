@@ -28,15 +28,15 @@ def display_logo() -> None:
     """Display the Leax ASCII logo with cascading wave animation."""
 
     logo_lines = [
-        "██    ██████  ██████  ██  ██",
-        "██    ██▄▄    ██▄▄██    ██",
-        "████  ██████  ██▀▀██  ██  ██",
+        "▀▀      ▀▀▀▀▀▀   ▀▀▀▀   ▀▀  ▀▀",
+        "░░      ░░▄▄    ░░▄▄░░    ░░",
+        "▄▄▄▄▄▄  ▄▄▄▄▄▄  ▄▄  ▄▄  ▄▄  ▄▄",
     ]
 
     # Animation parameters
     START_ROW = 1
-    LINE_STAGGER = 4  # Characters delay before next line starts
-    STEP_DELAY = 0.025  # Seconds between each animation step
+    LINE_STAGGER = 3  # Characters delay before next line starts
+    STEP_DELAY = 0.020  # Seconds between each animation step
 
     # Parse non-space characters per line: list of (col, char)
     line_chars = []
