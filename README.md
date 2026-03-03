@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/vex.png" alt="Vex Logo" width="400">
+  <img src="./assets/leax.png" alt="Leax Logo" width="400">
 </p>
 
 <h3 align="center">Deterministic memory leak analysis, explained by AI.</h3>
@@ -7,20 +7,20 @@
 ---
 
 
-## What is VEX?
+## What is LEAX?
 
-VEX (Valgrind Error eXplorer) is a CLI tool that analyzes memory leaks in C programs. It combines Valgrind, GDB dynamic tracing, and Mistral AI to identify the root cause of each leak and explain how to fix it.
+LEAX (Leak Analyzer & eXplorer) is a CLI tool that analyzes memory leaks in C programs. It combines Valgrind, GDB dynamic tracing, and Mistral AI to identify the root cause of each leak and explain how to fix it.
 
 <p align="left">
-  <img src="./assets/vex_home.png" alt="Vex home" width="600">
+  <img src="./assets/leax_home.png" alt="Leax home" width="600">
 </p>
 
-## Why VEX?
+## Why LEAX?
 
 Memory leak analysis is a domain where LLMs perform poorly when used alone. They don't simulate memory, propagate early mistakes, and often fail on non-trivial cases involving aliasing, embedded allocations, or container lifetimes.
 
 
-**VEX takes a different approach** — it separates the problem into two phases:
+**LEAX takes a different approach** — it separates the problem into two phases:
 
 1. **Deterministic root cause identification** — Valgrind detects the leak, GDB traces execution dynamically, and a Python algorithm tracks memory ownership line by line
 2. **LLM-assisted explanation** — Mistral AI explains the leak, justifies the root cause, and suggests a minimal fix
@@ -28,7 +28,7 @@ Memory leak analysis is a domain where LLMs perform poorly when used alone. They
 The LLM never guesses ownership or simulates memory. It only explains what the deterministic analysis has already proven.
 
 <p align="left">
-  <img src="./assets/vex_analysis.png" alt="Valgrind Error Xplorer" width="600">
+  <img src="./assets/leax_analysis.png" alt="Leak Analyzer & eXplorer" width="600">
 </p>
 
 ## Installation
@@ -38,8 +38,8 @@ The LLM never guesses ownership or simulates memory. It only explains what the d
 **Requirements:** `valgrind`, `gdb`, `python3`, `pip3`
 
 ```bash
-git clone git@github.com:hooop/Vex.git
-cd vex
+git clone git@github.com:hooop/Leax.git
+cd leax
 make install
 ```
 
@@ -50,18 +50,18 @@ Installs to `~/.local/` — no sudo required. Missing dependencies are detected 
 **Requirements:** Docker
 
 ```bash
-git clone git@github.com:hooop/Vex.git
-cd vex
+git clone git@github.com:hooop/Leax.git
+cd leax
 make install
 ```
 
-Builds a Docker image and installs the `vex` command to `/usr/local/bin` (requires sudo).
+Builds a Docker image and installs the `leax` command to `/usr/local/bin` (requires sudo).
 
 
 ### Configure your API key
 
 ```bash
-vex configure
+leax configure
 ```
 
 Enter your [Mistral AI](https://console.mistral.ai/) API key when prompted.
@@ -72,7 +72,7 @@ Enter your [Mistral AI](https://console.mistral.ai/) API key when prompted.
 ## Usage
 
 ```bash
-vex <executable> [arguments]
+leax <executable> [arguments]
 ```
 
 
@@ -81,7 +81,7 @@ vex <executable> [arguments]
 ```bash
 cd examples/test_array
 make
-vex ./leaky
+leax ./leaky
 ```
 
 The `examples/` directory contains scenarios for each leak type.
@@ -110,7 +110,7 @@ Source + Executable
 
 ## Leak Classification
 
-VEX categorizes leaks into three types:
+LEAX categorizes leaks into three types:
 
 | Type | Name | Description |
 |------|------|-------------|
@@ -130,7 +130,7 @@ Each points to the precise line of code responsible.
 
 ## Report a Problem
 
-If Vex produces an incorrect diagnosis or fails on your code, [open an issue](https://github.com/hooop/Vex/issues). Describe what happened and, if possible, include the code that caused the problem. This helps us improve the tool.
+If Leax produces an incorrect diagnosis or fails on your code, [open an issue](https://github.com/hooop/Leax/issues). Describe what happened and, if possible, include the code that caused the problem. This helps us improve the tool.
 
 
 ## Design Philosophy

@@ -1,5 +1,5 @@
 # ============================================================================
-# Vex - Valgrind Error eXplorer
+# Leax - Leak Analyzer & eXplorer
 # Makefile for installation and development
 # ============================================================================
 
@@ -29,8 +29,8 @@ RED    := \033[38;5;196m
 RESET  := \033[0m
 
 # Linux install paths
-VEX_BIN   := $(HOME)/.local/bin/vex
-VEX_DIR   := $(HOME)/.local/share/vex
+LEAX_BIN   := $(HOME)/.local/bin/leax
+LEAX_DIR   := $(HOME)/.local/share/leax
 
 # ============================================================================
 # Public Commands
@@ -42,8 +42,8 @@ all: help
 # Display available commands
 help:
 	@echo "Available commands:"
-	@echo "  $(BLUE)make install$(RESET)    - Install Vex globally"
-	@echo "  $(BLUE)make uninstall$(RESET)  - Remove Vex installation"
+	@echo "  $(BLUE)make install$(RESET)    - Install Leax globally"
+	@echo "  $(BLUE)make uninstall$(RESET)  - Remove Leax installation"
 ifeq ($(OS),Darwin)
 	@echo "  $(BLUE)make shell$(RESET)      - Open interactive shell in Docker container"
 	@echo "  $(BLUE)make clean$(RESET)      - Remove Docker image and Python cache"
@@ -57,22 +57,22 @@ endif
 ifeq ($(OS),Linux)
 install: check-deps
 	@echo ""
-	@printf "$(YELLOW)- $(RESET)Installing Vex sources to $(VEX_DIR)/srcs/"
-	@mkdir -p $(VEX_DIR)/srcs
-	@cp srcs/*.py $(VEX_DIR)/srcs/
-	@cp requirements.txt $(VEX_DIR)/
-	@printf "\r$(GREEN)✓ $(RESET)Installing Vex sources to $(VEX_DIR)/srcs/\n"
+	@printf "$(YELLOW)- $(RESET)Installing Leax sources to $(LEAX_DIR)/srcs/"
+	@mkdir -p $(LEAX_DIR)/srcs
+	@cp srcs/*.py $(LEAX_DIR)/srcs/
+	@cp requirements.txt $(LEAX_DIR)/
+	@printf "\r$(GREEN)✓ $(RESET)Installing Leax sources to $(LEAX_DIR)/srcs/\n"
 	@printf "$(YELLOW)- $(RESET)Installing Python dependencies"
 	@pip3 install --user -r requirements.txt > /dev/null 2>&1
 	@printf "\r$(GREEN)✓ $(RESET)Installing Python dependencies\n"
-	@printf "$(YELLOW)- $(RESET)Installing Vex to $(VEX_BIN)"
+	@printf "$(YELLOW)- $(RESET)Installing Leax to $(LEAX_BIN)"
 	@mkdir -p $(HOME)/.local/bin
-	@chmod +x vex_cli
-	@cp vex_cli $(VEX_BIN)
-	@printf "\r$(GREEN)✓ $(RESET)Installing Vex to $(VEX_BIN)\n"
+	@chmod +x leax_cli
+	@cp leax_cli $(LEAX_BIN)
+	@printf "\r$(GREEN)✓ $(RESET)Installing Leax to $(LEAX_BIN)\n"
 	@echo "$(GREEN)✓$(RESET) Installation complete!"
 	@echo ""
-	@echo "$(YELLOW)-$(RESET) Run $(LIGHT_YELLOW)vex configure$(RESET) to set up your Mistral API key$(RESET)"
+	@echo "$(YELLOW)-$(RESET) Run $(LIGHT_YELLOW)leax configure$(RESET) to set up your Mistral API key$(RESET)"
 	@echo ""
 	@echo "$$PATH" | grep -q "$(HOME)/.local/bin" || \
 		(echo "$(YELLOW)⚠$(RESET)  ~/.local/bin is not in your PATH" && \
@@ -98,13 +98,13 @@ check-deps:
 else
 install: build
 	@sudo -v
-	@printf "$(YELLOW)- $(RESET)Installing Vex to /usr/local/bin"
-	@chmod +x vex_cli > /dev/null 2>&1
-	@sudo cp vex_cli /usr/local/bin/vex > /dev/null 2>&1
-	@printf "\r$(GREEN)✓ $(RESET)Installing Vex to /usr/local/bin\n"
+	@printf "$(YELLOW)- $(RESET)Installing Leax to /usr/local/bin"
+	@chmod +x leax_cli > /dev/null 2>&1
+	@sudo cp leax_cli /usr/local/bin/leax > /dev/null 2>&1
+	@printf "\r$(GREEN)✓ $(RESET)Installing Leax to /usr/local/bin\n"
 	@echo "$(GREEN)✓$(RESET) Installation complete!"
 	@echo ""
-	@echo "$(YELLOW)-$(RESET) Run $(LIGHT_YELLOW)vex configure$(RESET) to set up your Mistral API key$(RESET)"
+	@echo "$(YELLOW)-$(RESET) Run $(LIGHT_YELLOW)leax configure$(RESET) to set up your Mistral API key$(RESET)"
 	@echo ""
 endif
 
@@ -115,18 +115,18 @@ endif
 ifeq ($(OS),Linux)
 uninstall:
 	@echo ""
-	@printf "$(YELLOW)- $(RESET)Removing Vex installation"
-	@rm -f $(VEX_BIN)
-	@rm -rf $(VEX_DIR)
-	@printf "\r$(GREEN)✓ $(RESET)Removing Vex installation\n"
+	@printf "$(YELLOW)- $(RESET)Removing Leax installation"
+	@rm -f $(LEAX_BIN)
+	@rm -rf $(LEAX_DIR)
+	@printf "\r$(GREEN)✓ $(RESET)Removing Leax installation\n"
 	@echo ""
 else
 uninstall:
 	@echo ""
 	@sudo -v
-	@printf "$(YELLOW)- $(RESET)Removing Vex installation"
-	@sudo rm -f /usr/local/bin/vex > /dev/null 2>&1
-	@printf "\r$(GREEN)✓ $(RESET)Removing Vex installation\n"
+	@printf "$(YELLOW)- $(RESET)Removing Leax installation"
+	@sudo rm -f /usr/local/bin/leax > /dev/null 2>&1
+	@printf "\r$(GREEN)✓ $(RESET)Removing Leax installation\n"
 	@echo ""
 endif
 
@@ -137,8 +137,8 @@ endif
 # Open interactive shell in container
 shell:
 ifeq ($(OS),Darwin)
-	@docker image inspect vex > /dev/null 2>&1 || $(MAKE) build --no-print-directory
-	@docker run $(PLATFORM) -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(PWD):/app vex /bin/bash
+	@docker image inspect leax > /dev/null 2>&1 || $(MAKE) build --no-print-directory
+	@docker run $(PLATFORM) -it --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(PWD):/app leax /bin/bash
 else
 	@echo "$(YELLOW)-$(RESET) 'make shell' is only available on macOS (Docker mode)"
 endif
@@ -148,7 +148,7 @@ clean:
 	@echo ""
 ifeq ($(OS),Darwin)
 	@printf "$(YELLOW)- $(RESET)Removing Docker image"
-	@docker rmi vex > /dev/null 2>&1 || true
+	@docker rmi leax > /dev/null 2>&1 || true
 	@printf "\r$(GREEN)✓ $(RESET)Removing Docker image\n"
 endif
 	@printf "$(YELLOW)- $(RESET)Cleaning Python cache"
@@ -187,7 +187,7 @@ build:
 		sleep 0.1; \
 	done) & \
 	SPINNER_PID=$$!; \
-	docker build $(PLATFORM) -t vex . > /dev/null 2>&1; \
+	docker build $(PLATFORM) -t leax . > /dev/null 2>&1; \
 	BUILD_STATUS=$$?; \
 	kill $$SPINNER_PID 2>/dev/null; wait $$SPINNER_PID 2>/dev/null; \
 	printf "\r\033[K"; \

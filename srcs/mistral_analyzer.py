@@ -1,7 +1,7 @@
 """
-Mistral AI analyzer wrapper for Vex integration.
+Mistral AI analyzer wrapper for Leax integration.
 
-Adapts mistral_api.py for integration with vex.py main workflow.
+Adapts mistral_api.py for integration with leax main workflow.
 """
 
 from mistral_api import analyze_memory_leak

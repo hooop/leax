@@ -1,5 +1,5 @@
 """
-Display Module for Vex
+Display Module for Leax
 
 Formats and displays analysis results in the terminal.
 """
@@ -37,7 +37,7 @@ def _build_header(error_number: int, total_errors: int) -> str:
 
     leak_text = f"Leak {error_number} / {total_errors}"
 
-    header = f"\n\033[38;5;224m│ Vex Analysis\n│ {leak_text}{RESET}\n"
+    header = f"\n\033[38;5;224m│ Leax Analysis\n│ {leak_text}{RESET}\n"
 
     return header
 
@@ -496,7 +496,7 @@ def display_leak_menu() -> str:
     print("")
 
     while True:
-        choice = input(DARK_GREEN + "vex > " + RESET).strip().lower()
+        choice = input(DARK_GREEN + "leax > " + RESET).strip().lower()
         if choice in ("", "v", "verify"):
             os.system("clear")
             return "verify"

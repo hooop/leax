@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
 """
-Vex - Valgrind Error eXplorer.
+Leax - Leak Analyzer & eXplorer.
 
 Command-line tool for analyzing memory leaks in C programs.
 Integrates Valgrind execution, source code extraction, memory tracking
 analysis, and AI-powered explanations.
 
-Usage: ./vex.py <executable> [args...]
+Usage: leax <executable> [args...]
 """
 
 import sys
@@ -146,8 +146,8 @@ def _reanalyze_after_compilation(
     display_summary(parsed_data)
 
     # Display menu
-    choice = interactive_menu(["Continue analysis", "Quit Vex"])
-    if choice == 1:  # "Quit Vex" selected
+    choice = interactive_menu(["Continue analysis", "Quit Leax"])
+    if choice == 1:  # "Quit Leax" selected
         print()
         return None
 
@@ -414,9 +414,9 @@ def _process_all_leaks(parsed_errors: list[ValgrindError], executable: str) -> s
 
                 # Menu after each leak (d = toggle details)
                 options = (
-                    ["Verify", "Next leak", "Quit Vex"]
+                    ["Verify", "Next leak", "Quit Leax"]
                     if len(parsed_errors) > 1
-                    else ["Verify", "Quit Vex"]
+                    else ["Verify", "Quit Leax"]
                 )
                 menu_choice = interactive_menu(options, hotkeys={"d"})
 
@@ -484,7 +484,7 @@ def _parse_command_line() -> tuple[str, list[str], str]:
 
 def main() -> int:
     """
-    Main entry point for Vex.
+    Main entry point for Leax.
 
     Returns:
         0 if success, 1 if error.
@@ -524,7 +524,7 @@ def main() -> int:
         print("\033[?25h", end="", flush=True)
 
         # Afficher le menu
-        choice = interactive_menu(["Start analysis", "Quit Vex"])
+        choice = interactive_menu(["Start analysis", "Quit Leax"])
 
         if choice == 1:  # "Quit" sélectionné
             print()

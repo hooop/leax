@@ -1,5 +1,5 @@
 """
-Type definitions for Vex
+Type definitions for Leax
 
 Central repository for all TypedDict structures used across the project.
 Ensures type consistency and provides IDE autocompletion support.

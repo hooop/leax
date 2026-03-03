@@ -1,5 +1,5 @@
 """
-ANSI Color Codes for Vex Terminal Output
+ANSI Color Codes for Leax Terminal Output
 
 Centralized color definitions used across the project.
 """

@@ -1,5 +1,5 @@
 """
-GDB-based pointer tracer for Vex.
+GDB-based pointer tracer for Leax.
 
 Traces the real execution path of a leaked pointer by running the program
 under GDB. Uses GDB's Python API via a generated batch script to:
@@ -153,7 +153,7 @@ import json
 import os
 
 # ---------------------------------------------------------------------------
-# Parameters injected by Vex
+# Parameters injected by Leax
 # ---------------------------------------------------------------------------
 ALLOC_FILE = {alloc_file!r}
 ALLOC_LINE = {alloc_line!r}
@@ -625,7 +625,7 @@ def _run_gdb(executable: str, script_content: str) -> Optional[str]:
 
     try:
         # Write script to a temporary file.
-        script_fd, script_path = tempfile.mkstemp(suffix=".py", prefix="vex_gdb_")
+        script_fd, script_path = tempfile.mkstemp(suffix=".py", prefix="leax_gdb_")
         with os.fdopen(script_fd, "w") as f:
             f.write(script_content)
         script_fd = None  # Ownership transferred to the with-block.

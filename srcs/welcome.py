@@ -25,12 +25,12 @@ def clear_screen() -> None:
 
 
 def display_logo() -> None:
-    """Display the Vex ASCII logo with cascading wave animation."""
+    """Display the Leax ASCII logo with cascading wave animation."""
 
     logo_lines = [
-        "██  ██  ██████  ██  ██",
-        "██▌ ██  ██▄▄      ██",
-        "  ████  ██████  ██  ██",
+        "██    ██████  ██████  ██  ██",
+        "██    ██▄▄    ██▄▄██    ██",
+        "████  ██████  ██▀▀██  ██  ██",
     ]
 
     # Animation parameters
@@ -87,7 +87,7 @@ def display_logo() -> None:
     # Position cursor after logo
     print(f"\033[{len(logo_lines) + START_ROW};1H")
 
-    print(GREEN + "Valgrind Error Xplorer" + RESET)
+    print(GREEN + "Valgrind Error Exlorer" + RESET)
     print()
 
 

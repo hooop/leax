@@ -1,5 +1,5 @@
 """
-Code Extractor for Vex
+Code Extractor for Leax
 
 Extracts complete C functions from source files based on line numbers.
 Uses brace counting to identify function boundaries.

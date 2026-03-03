@@ -33,7 +33,9 @@ CLAUDE.md
 
 # Legacy files
 accueil_vex.cpp
+accueil_leax.cpp
 vex.cpp
+leax.cpp
 logo.txt
 iteration_prompt.md
 examples/README.md

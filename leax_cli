@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG_FILE="$HOME/.vexrc"
+CONFIG_FILE="$HOME/.leaxrc"
 OS="$(uname -s)"
 
 # ANSI color codes
@@ -10,7 +10,7 @@ BLUE="\033[38;5;31m"
 RED="\033[38;5;196m"
 RESET="\033[0m"
 
-# Handle 'vex configure' command
+# Handle 'leax configure' command
 if [ "$1" = "configure" ]; then
     echo ""
     read -p "$(echo -e "${YELLOW} - ${RESET}Enter your Mistral API key: ")" api_key
@@ -25,22 +25,22 @@ if [ "$1" = "configure" ]; then
 
     echo ""
     echo -e "${GREEN} ✓ ${RESET} Configuration saved to $CONFIG_FILE"
-    echo -e "${GREEN} ✓ ${RESET} You can now use vex from anywhere!"
-    echo -e "${GREEN} ✓ ${RESET} Usage: vex ./<executable> [args...]"
+    echo -e "${GREEN} ✓ ${RESET} You can now use leax from anywhere!"
+    echo -e "${GREEN} ✓ ${RESET} Usage: leax ./<executable> [args...]"
      echo ""
 
     exit 0
 fi
 
-# Normal vex usage
+# Normal leax usage
 if [ $# -lt 1 ]; then
-    echo "Usage: vex <executable> [args...]"
-    echo "       vex configure"
+    echo "Usage: leax <executable> [args...]"
+    echo "       leax configure"
     echo ""
     echo "Examples:"
-    echo "  vex ./my_program"
-    echo "  vex ./my_program arg1 arg2"
-    echo "  vex configure              # Configure Mistral API key"
+    echo "  leax ./my_program"
+    echo "  leax ./my_program arg1 arg2"
+    echo "  leax configure              # Configure Mistral API key"
     exit 1
 fi
 
@@ -98,7 +98,7 @@ load_api_key() {
         else
             echo "Error: No Mistral API key configured"
             echo ""
-            echo "Please run: vex configure"
+            echo "Please run: leax configure"
             echo ""
             echo "Or create a .env file with:"
             echo "  MISTRAL_API_KEY=your_api_key"
@@ -110,16 +110,16 @@ load_api_key() {
 
 if [ "$OS" = "Linux" ]; then
     # ── Linux: run Python directly ──
-    VEX_SRCS="$HOME/.local/share/vex/srcs"
+    LEAX_SRCS="$HOME/.local/share/leax/srcs"
 
-    if [ ! -f "$VEX_SRCS/vex.py" ]; then
-        echo "Error: Vex sources not found at $VEX_SRCS"
-        echo "Please run 'make install' from the Vex repository"
+    if [ ! -f "$LEAX_SRCS/vex.py" ]; then
+        echo "Error: Leax sources not found at $LEAX_SRCS"
+        echo "Please run 'make install' from the Leax repository"
         exit 1
     fi
 
     load_api_key
-    python3 "$VEX_SRCS/vex.py" "$EXECUTABLE" "${ARGS[@]}"
+    python3 "$LEAX_SRCS/vex.py" "$EXECUTABLE" "${ARGS[@]}"
 else
     # ── macOS: run via Docker ──
 
@@ -133,7 +133,7 @@ else
         else
             echo "Error: No Mistral API key configured"
             echo ""
-            echo "Please run: vex configure"
+            echo "Please run: leax configure"
             echo ""
             echo "Or create a .env file with:"
             echo "  MISTRAL_API_KEY=your_api_key"
@@ -147,5 +147,5 @@ else
         --env-file "$ENV_SOURCE" \
         -v "$CURRENT_DIR:/work" \
         -w /work \
-        vex /app/srcs/vex.py "$EXECUTABLE" "${ARGS[@]}" 2>/dev/null
+        leax /app/srcs/vex.py "$EXECUTABLE" "${ARGS[@]}" 2>/dev/null
 fi

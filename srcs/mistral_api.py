@@ -1,5 +1,5 @@
 """
-Mistral API Module for Vex
+Mistral API Module for Leax
 
 Sends memory leak analysis requests to Mistral AI and returns pedagogical explanations.
 """

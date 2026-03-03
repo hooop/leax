@@ -22,7 +22,7 @@ $(TARGET): $(SRC)
 ifeq ($(IN_DOCKER),yes)
 	@$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 else
-	@docker run $(PLATFORM) --rm -v $(PWD):/work -w /work vex $(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+	@docker run $(PLATFORM) --rm -v $(PWD):/work -w /work leax $(CC) $(CFLAGS) $(SRC) -o $(TARGET)
 endif
 
 clean:

@@ -5,7 +5,7 @@
 mistral_animation.py
 
 Animated Mistral logo display with wave effects.
-Plays for a fixed duration before transitioning to Vex.
+Plays for a fixed duration before transitioning to Leax.
 """
 
 import time
