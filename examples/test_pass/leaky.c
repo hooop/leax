@@ -1,12 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test: pointer passed as function argument.
-** The pointer is allocated in create(), passed to process()
-** which does NOT free it, and main() does not free it either.
-** Expected: Type 2 — pointer lost at end of process().
-*/
 
 char	*create(void)
 {

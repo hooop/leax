@@ -1,11 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test: double allocation in a helper function.
-** The helper allocates a struct and its content.
-** The caller frees the struct but forgets the content.
-*/
 
 typedef struct s_pair
 {

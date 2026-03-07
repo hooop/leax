@@ -1,21 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test program for GDB-based tracing.
-** Exercises loops, conditions, and indirect frees —
-** the three cases that static analysis cannot handle.
-*/
-
-/* ---- Indirect free: hidden inside a helper function ---- */
-
 void	destroy_data(char *data)
 {
 	if (data)
 		free(data);
 }
-
-/* ---- Node structure ---- */
 
 typedef struct s_node
 {
@@ -33,8 +23,6 @@ t_node	*create_node(const char *str)
 	n->next = NULL;
 	return (n);
 }
-
-/* ---- Build a linked list in a loop ---- */
 
 t_node	*build_list(int count)
 {
@@ -54,8 +42,6 @@ t_node	*build_list(int count)
 	
 	return (head);
 }
-
-/* ---- Partial cleanup: frees only the first node ---- */
 
 void	partial_cleanup(t_node *list)
 {

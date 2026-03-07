@@ -1,11 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test: conditional leak.
-** Memory is allocated but only freed when a flag is true.
-** When the flag is false, the memory is never freed.
-*/
 
 char	*create_buffer(int size)
 {

@@ -1,11 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test: array of pointers with partial cleanup.
-** Allocates 5 strings in an array. The cleanup loop
-** has an off-by-one error and misses the last element.
-*/
 
 char	**create_array(int count)
 {

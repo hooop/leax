@@ -1,12 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*
-** Test: chained function calls with conditional free.
-** Memory passes through 3 functions. The deepest function
-** allocates, the middle one decides whether to free based
-** on a condition, the outer one uses the result.
-*/
 
 char	*allocate(int size)
 {
