@@ -14,7 +14,6 @@ core
 
 # Dev/test scripts
 run_test.sh
-test_gdb.py
 test_pipeline.py
 test_extractor.py
 

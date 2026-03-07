@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     valgrind \
+    gdb \
     gcc \
     make \
     python3 \
@@ -21,6 +22,10 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy Leax source code
 COPY srcs/ /app/srcs/
+
+# Copy test files and examples
+COPY test_gdb.py /app/
+COPY examples/ /app/examples/
 
 # Default command: open bash shell
 CMD ["/bin/bash"]
